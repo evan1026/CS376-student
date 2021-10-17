@@ -60,6 +60,9 @@ public class Player : MonoBehaviour
         var joystickDir = new Vector2(horizontalInput, verticalInput).normalized;
         var movement = joystickDir * EnginePower;
         rigidBody.AddForce(movement);
+
+        var rotateInput = Input.GetAxis("Rotate");
+        rigidBody.angularVelocity = rotateInput * RotateSpeed;
     }
 
     /// <summary>
