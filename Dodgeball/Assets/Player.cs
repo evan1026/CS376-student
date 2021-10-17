@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
     /// </summary>
     public float OrbVelocity = 10;
 
+    private Rigidbody2D rigidBody;
+
+    void Start() {
+        rigidBody = GetComponent<Rigidbody2D>();
+    }
+
 
     /// <summary>
     /// Fire if the player is pushing the button for the Fire axis
@@ -49,7 +55,11 @@ public class Player : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void FixedUpdate()
     {
-        // TODO
+        var horizontalInput = Input.GetAxis("Horizontal");
+        var verticalInput = Input.GetAxis("Vertical");
+        var joystickDir = new Vector2(horizontalInput, verticalInput).normalized;
+        var movement = joystickDir * EnginePower;
+        rigidBody.AddForce(movement);
     }
 
     /// <summary>
