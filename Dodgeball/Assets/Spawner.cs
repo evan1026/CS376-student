@@ -20,12 +20,20 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public float FreeRadius = 10;
 
+    private float lastSpawnTime = 0;
+
     /// <summary>
     /// Check if we need to spawn and if so, do so.
     /// </summary>
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        var currentTime = Time.time;
+        if (currentTime - lastSpawnTime >= SpawnInterval) {
+            var spawnLoc = SpawnUtilities.RandomFreePoint(FreeRadius);
+            Instantiate(Prefab, spawnLoc, Quaternion.identity);
+            lastSpawnTime = currentTime;
+        }
+        
     }
 }
