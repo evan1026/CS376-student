@@ -58,6 +58,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private Vector2 HeadingToPlayer => OffsetToPlayer.normalized;
 
+    private float lastSpawnTime;
+
     /// <summary>
     /// Initialize player and rigidBody fields
     /// </summary>
@@ -66,6 +68,7 @@ public class Enemy : MonoBehaviour
     {
         player = FindObjectOfType<Player>().transform;
         rigidBody = GetComponent<Rigidbody2D>();
+        lastSpawnTime = Time.time;
     }
 
     /// <summary>
@@ -74,7 +77,11 @@ public class Enemy : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        var currentTime = Time.time;
+        if (currentTime - lastSpawnTime >= CoolDownTime) {
+            Fire();
+            lastSpawnTime = currentTime;
+        }
     }
 
     /// <summary>
@@ -83,7 +90,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Fire()
     {
-        // TODO
+        var orb = Instantiate(OrbPrefab, rigidBody.position + HeadingToPlayer, Quaternion.identity);
+        var orbRigidBody = orb.GetComponent<Rigidbody2D>();
+        orbRigidBody.velocity = HeadingToPlayer * OrbVelocity;
+        orbRigidBody.mass = OrbMass;
     }
 
     /// <summary>
