@@ -34,6 +34,5 @@ public class Spawner : MonoBehaviour
             Instantiate(Prefab, spawnLoc, Quaternion.identity);
             lastSpawnTime = currentTime;
         }
-        
     }
 }
