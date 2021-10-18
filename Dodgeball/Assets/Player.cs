@@ -27,9 +27,11 @@ public class Player : MonoBehaviour
     public float OrbVelocity = 10;
 
     private Rigidbody2D rigidBody;
+    private Transform playerTransform;
 
     void Start() {
         rigidBody = GetComponent<Rigidbody2D>();
+        playerTransform = GetComponent<Transform>();
     }
 
 
@@ -43,7 +45,12 @@ public class Player : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        if (Input.GetAxis("Fire") != 0) {
+            var newOrb = Instantiate(OrbPrefab, playerTransform.position + playerTransform.right, Quaternion.identity);
+            var orbRigidBody = newOrb.GetComponent<Rigidbody2D>();
+            orbRigidBody.velocity = playerTransform.right * OrbVelocity;
+        }
+
     }
 
     /// <summary>
