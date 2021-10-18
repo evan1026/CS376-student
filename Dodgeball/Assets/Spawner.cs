@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public float FreeRadius = 10;
 
-    private float lastSpawnTime = 0;
+    private float lastSpawnTime = float.NegativeInfinity;
 
     /// <summary>
     /// Check if we need to spawn and if so, do so.
