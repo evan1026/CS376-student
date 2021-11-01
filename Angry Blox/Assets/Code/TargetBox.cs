@@ -7,6 +7,8 @@ public class TargetBox : MonoBehaviour
     /// </summary>
     public static float OffScreen;
 
+    private bool isScored = false;
+
     internal void Start() {
         OffScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-100, 0, 0)).x;
     }
@@ -19,6 +21,17 @@ public class TargetBox : MonoBehaviour
 
     private void Scored()
     {
-        // FILL ME IN
+        GetComponent<SpriteRenderer>().color = Color.green;
+        if (!isScored) {
+            ScoreKeeper.AddToScore(GetComponent<Rigidbody2D>().mass);
+            isScored = true;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision) {
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("Ground")) {
+            Scored();
+        }
     }
 }

@@ -16,7 +16,7 @@ public class ProjectileThrower : MonoBehaviour {
     /// <summary>
     /// The spring attached the projectile to the catapult base
     /// </summary>
-    private SpringJoint2D springJoint; 
+    private SpringJoint2D springJoint;
     /// <summary>
     /// Where the spring attaches to the catapult.
     /// Initialized to the initial location of the projectile.
@@ -35,8 +35,7 @@ public class ProjectileThrower : MonoBehaviour {
     /// </summary>
     /// <param name="o"></param>
     /// <returns></returns>
-    Vector2 ScreenPosition(GameObject o)
-    {
+    Vector2 ScreenPosition(GameObject o) {
         // Project through the main (only) camera to get screen coordinates
         return Camera.main.WorldToScreenPoint(o.transform.position);
     }
@@ -44,8 +43,7 @@ public class ProjectileThrower : MonoBehaviour {
     /// <summary>
     /// True if gameobject is off the screen
     /// </summary>
-    bool IsOffScreen(GameObject o)
-    {
+    bool IsOffScreen(GameObject o) {
         var pos = ScreenPosition(o);
         return pos.x < 0 || pos.y < 0 || pos.x > Screen.width || pos.y > Screen.height;
     }
@@ -55,13 +53,11 @@ public class ProjectileThrower : MonoBehaviour {
     /// </summary>
     /// <param name="o">GameObject</param>
     /// <returns></returns>
-    bool IsActive(GameObject o)
-    {
+    bool IsActive(GameObject o) {
         return !IsOffScreen(o) && o.GetComponent<Rigidbody2D>().IsAwake();
     }
 
-    bool IsActive(Rigidbody2D rb)
-    {
+    bool IsActive(Rigidbody2D rb) {
         return IsActive(rb.gameObject);
     }
 
@@ -69,9 +65,14 @@ public class ProjectileThrower : MonoBehaviour {
     /// True when we're still waiting for things to stop flying around
     /// </summary>
     /// <returns></returns>
-    bool WaitingForPhysicsToSettle()
-    {
-        return true;  // Replace this
+    bool WaitingForPhysicsToSettle() {
+        Rigidbody2D[] bodies = FindObjectsOfType<Rigidbody2D>();
+        foreach (Rigidbody2D body in bodies) {
+            if (IsActive(body)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -83,26 +84,25 @@ public class ProjectileThrower : MonoBehaviour {
         springAttachmentPoint = transform.position;
     }
 
-    internal void Update()
-    {
+    internal void Update() {
         FireControl();
+
+        if ((firingState == FiringState.Firing && !WaitingForPhysicsToSettle()) || Input.GetKeyDown(KeyCode.Escape)) {
+            ResetForFiring();
+        }
     }
 
     /// <summary>
     /// Reload the current level
     /// </summary>
-    private void ResetForFiring()
-    {
+    private void ResetForFiring() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void FireControl()
-    {
-        switch (firingState)
-        {
+    private void FireControl() {
+        switch (firingState) {
             case FiringState.Idle:
-                if (Input.GetMouseButtonDown(0))
-                {
+                if (Input.GetMouseButtonDown(0)) {
                     // click to pull back
                     firingState = FiringState.Aiming;
                 }
@@ -110,8 +110,7 @@ public class ProjectileThrower : MonoBehaviour {
 
             case FiringState.Aiming:
                 MoveProjectileToMousePosition();
-                if (Input.GetMouseButtonUp(0))
-                {
+                if (Input.GetMouseButtonUp(0)) {
                     // Release the slingshot
                     firingState = FiringState.Firing;
                     // we damp it when we're pulling back so that it doesn't oscillate
@@ -121,8 +120,7 @@ public class ProjectileThrower : MonoBehaviour {
                 break;
 
             case FiringState.Firing:
-                if (transform.position.x >= springAttachmentPoint.x)
-                {
+                if (transform.position.x >= springAttachmentPoint.x) {
                     springJoint.enabled = false;
                     // if we're close enough to the center, turn off the spring (so that the projectile flies)
                     GetComponent<DistanceJoint2D>().enabled = false; // also turn off the distance lock
