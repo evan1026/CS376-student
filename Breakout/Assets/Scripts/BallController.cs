@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour {
 
@@ -25,6 +26,8 @@ public class BallController : MonoBehaviour {
 
     void OnDestroy() {
         ballCount -= 1;
-        Debug.Log("Lost ball, new count: " + ballCount);
+        if (ballCount == 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        }
     }
 }
