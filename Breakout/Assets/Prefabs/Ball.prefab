@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8953421530562740911}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,3 +134,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3b1f968e13b42b9bc7d5e399389c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartVelocity: {x: 2, y: 3, z: 0}
