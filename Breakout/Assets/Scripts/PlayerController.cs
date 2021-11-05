@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rigidBody;
 
     public float MoveSpeed;
+    public float BallSpeedAdd;
+    public Vector2 PositionOffset;
 
     // Start is called before the first frame update
     void Start() {
@@ -22,8 +24,8 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Ball")) {
             var ballRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
-            var currVel = ballRigidbody.velocity.magnitude;
-            var awayVector = ballRigidbody.position - rigidBody.position;
+            var currVel = ballRigidbody.velocity.magnitude + BallSpeedAdd;
+            var awayVector = ballRigidbody.position - (rigidBody.position + PositionOffset);
             awayVector = awayVector.normalized * currVel;
             ballRigidbody.velocity = awayVector;
         }

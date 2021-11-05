@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 10
+  BallSpeedAdd: 0
+  PositionOffset: {x: 0, y: -1}
 --- !u!50 &7072511379357846354
 Rigidbody2D:
   serializedVersion: 4
