@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BrickController : MonoBehaviour {
 
     static Dictionary<int, Color> levelColors = null;
+    static int totalBricks = 0;
 
     public int Level = 1;
 
@@ -12,6 +14,8 @@ public class BrickController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        totalBricks++;
+
         if (levelColors == null) {
             levelColors = new Dictionary<int, Color>();
             levelColors.Add(1, Color.red);
@@ -37,7 +41,16 @@ public class BrickController : MonoBehaviour {
         if (Level > 1) {
             updateLevel(Level - 1);
         } else {
-            Destroy(gameObject);
+            Destruct();
+        }
+    }
+
+    void Destruct() {
+        Destroy(gameObject);
+        totalBricks--;
+
+        if (totalBricks == 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
     }
 
