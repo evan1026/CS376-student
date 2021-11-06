@@ -40,8 +40,10 @@ public class BrickController : MonoBehaviour {
     private void hit() {
         if (Level > 1) {
             updateLevel(Level - 1);
+            ScoreManager.BrickDowngraded();
         } else {
             Destruct();
+            ScoreManager.BrickDestroyed();
         }
     }
 
@@ -51,6 +53,7 @@ public class BrickController : MonoBehaviour {
 
         if (totalBricks == 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            ScoreManager.LevelCleared();
         }
     }
 
