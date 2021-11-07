@@ -26,7 +26,7 @@ public class BallController : MonoBehaviour {
         if (Mathf.Abs(rigidBody.velocity.magnitude - Speed) > 0.1) {
             var direction = rigidBody.velocity.normalized;
             rigidBody.velocity = direction * Speed;
-            Debug.Log("Fixed speed");
+            //Debug.Log("Fixed speed");
         }
     }
 
