@@ -21,8 +21,24 @@ public class PlayerController : MonoBehaviour {
         rigidBody.velocity = new Vector3(horizontal * MoveSpeed, 0, 0);
     }
 
+    bool topCollision(Collision2D collision) {
+        Vector3 contactPoint = collision.contacts[0].point;
+        Collider2D ourCollider = collision.otherCollider;
+        Vector3 center = ourCollider.bounds.center;
+
+        var rectWidth = ourCollider.bounds.size.x;
+
+        if (contactPoint.y > center.y &&
+                (contactPoint.x < center.x + rectWidth / 2 &&
+                 contactPoint.x > center.x - rectWidth / 2)) {
+            return true;
+        }
+
+        return false;
+    }
+
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Ball")) {
+        if (collision.gameObject.CompareTag("Ball") && topCollision(collision)) {
             var ballRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
             var currVel = ballRigidbody.velocity.magnitude + BallSpeedAdd;
             var awayVector = ballRigidbody.position - (rigidBody.position + PositionOffset);
