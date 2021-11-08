@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BrickController : MonoBehaviour {
 
@@ -56,8 +55,8 @@ public class BrickController : MonoBehaviour {
         totalBricks--;
 
         if (totalBricks == 0) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
             ScoreManager.LevelCleared();
+            FindObjectOfType<EndGame>(true).Enter();
         }
     }
 

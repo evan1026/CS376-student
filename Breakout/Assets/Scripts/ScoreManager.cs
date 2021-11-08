@@ -6,17 +6,21 @@ using UnityEngine.UI;
 class ScoreManager : MonoBehaviour {
     private static int score;
     private static Text textObject;
+    private static Text finalTextObject;
 
     public Text ScoreTextObject;
+    public Text FinalScoreTextObject;
 
     public void Start() {
+        score = 0;
         textObject = ScoreTextObject;
-        AddScore(0);  // Makes sure that when we reload the level the text object gets updated
+        finalTextObject = FinalScoreTextObject;
     }
 
     public static void AddScore(int val) {
         score += val;
         textObject.text = "Score: " + score;
+        finalTextObject.text = "Final Score: " + score;
     }
 
     public static void BrickDowngraded() {
