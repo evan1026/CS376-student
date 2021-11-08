@@ -11,9 +11,11 @@ public class BallController : MonoBehaviour {
     public float Speed = 5;
 
     private Rigidbody2D rigidBody;
+    private AudioController audioController;
 
     // Start is called before the first frame update
     void Start() {
+        audioController = FindObjectOfType<AudioController>();
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.velocity = StartVelocity.normalized * Speed;
         ballCount += 1;
@@ -38,6 +40,12 @@ public class BallController : MonoBehaviour {
         ballCount -= 1;
         if (ballCount == 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (!collision.gameObject.CompareTag("Brick")) {
+            audioController.playBallBounce();
         }
     }
 }

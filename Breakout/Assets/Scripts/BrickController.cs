@@ -11,6 +11,7 @@ public class BrickController : MonoBehaviour {
     public int Level = 1;
 
     private SpriteRenderer spriteRenderer;
+    private AudioController audioController;
 
     // Start is called before the first frame update
     void Start() {
@@ -29,6 +30,7 @@ public class BrickController : MonoBehaviour {
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioController = FindObjectOfType<AudioController>();
         updateLevel(Level);
     }
 
@@ -40,9 +42,11 @@ public class BrickController : MonoBehaviour {
     private void hit() {
         if (Level > 1) {
             updateLevel(Level - 1);
+            audioController.playBrickCrack();
             ScoreManager.BrickDowngraded();
         } else {
             Destruct();
+            audioController.playBrickBreak();
             ScoreManager.BrickDestroyed();
         }
     }
