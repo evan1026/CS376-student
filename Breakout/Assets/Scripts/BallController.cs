@@ -12,36 +12,71 @@ public class BallController : MonoBehaviour {
 
     private Rigidbody2D rigidBody;
     private AudioController audioController;
+    private Rigidbody2D player;
+    private FixedJoint2D fixedJoint;
+    private bool captured = false;
 
     // Start is called before the first frame update
     void Start() {
         audioController = FindObjectOfType<AudioController>();
+        player = FindObjectOfType<PlayerController>().gameObject.GetComponent<Rigidbody2D>();
+        fixedJoint = GetComponent<FixedJoint2D>();
         rigidBody = GetComponent<Rigidbody2D>();
-        rigidBody.velocity = StartVelocity.normalized * Speed;
+        rigidBody.velocity = new Vector3(0,0,0);
         ballCount += 1;
+        Capture();
     }
 
     // Update is called once per frame
-    void Update() {
-        // Sometimes speed changes and I don't know why. Easiest fix is to say if it changes
-        // a lot we just get the direction we were heading and fix the speed
-        if (Mathf.Abs(rigidBody.velocity.magnitude - Speed) > 0.1) {
-            var direction = rigidBody.velocity.normalized;
-            rigidBody.velocity = direction * Speed;
+    void FixedUpdate() {
+        if (!captured) {
+            // Sometimes speed changes and I don't know why. Easiest fix is to say if it changes
+            // a lot we just get the direction we were heading and fix the speed
+            if (Mathf.Abs(rigidBody.velocity.magnitude - Speed) > 0.1) {
+                var direction = rigidBody.velocity.normalized;
+                rigidBody.velocity = direction * Speed;
 
-            if (DebugLogging) {
-                Debug.Log("Fixed speed");
+                if (DebugLogging) {
+                    Debug.Log("Fixed speed");
+                }
+            }
+
+            // Rarely the ball can get stuck just going left and right and it will never come
+            // down. To fix this, if we detect this case, we give the ball a slight downward
+            // trajectory
+            if (Mathf.Abs(rigidBody.velocity.y) <= 0.01) {
+                var vel = rigidBody.velocity;
+                vel.y = -0.1f;
+                var direction = vel.normalized;
+                rigidBody.velocity = direction * Speed;
+
+                if (DebugLogging) {
+                    Debug.Log("Unstuck");
+                }
             }
         }
+    }
 
-        // Rarely the ball can get stuck just going left and right and it will never come
-        // down. To fix this, if we detect this case, we give the ball a slight downward
-        // trajectory
-        if (Mathf.Abs(rigidBody.velocity.y) <= 0.01) {
-            var vel = rigidBody.velocity;
-            vel.y = -0.1f;
-            var direction = vel.normalized;
-            rigidBody.velocity = direction * Speed;
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Launch();
+        }
+    }
+
+    void Capture() {
+        if (!captured) {
+            captured = true;
+            fixedJoint.connectedBody = player;
+            fixedJoint.enabled = true;
+        }
+    }
+
+    void Launch() {
+        if (captured) {
+            captured = false;
+            fixedJoint.connectedBody = null;
+            fixedJoint.enabled = false;
+            rigidBody.velocity = StartVelocity.normalized * Speed;
         }
     }
 
@@ -52,7 +87,10 @@ public class BallController : MonoBehaviour {
     void OnDestroy() {
         ballCount -= 1;
         if (ballCount == 0) {
-            FindObjectOfType<EndGame>(true).Enter();
+            var endGame = FindObjectOfType<EndGame>(true);
+            if (endGame != null) {
+                endGame.Enter();
+            }
         }
     }
 

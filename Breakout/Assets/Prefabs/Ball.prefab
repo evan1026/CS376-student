@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8968012727379411799}
   - component: {fileID: -6458163962051315138}
   - component: {fileID: -8953421530562740911}
+  - component: {fileID: 7893744686776018847}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -137,3 +138,21 @@ MonoBehaviour:
   StartVelocity: {x: 3, y: 4.5, z: 0}
   Speed: 5
   DebugLogging: 1
+--- !u!255 &7893744686776018847
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318849098654323052}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_DampingRatio: 0
+  m_Frequency: 0
