@@ -28,6 +28,6 @@ class ScoreManager : MonoBehaviour {
     }
 
     public static void LevelCleared() {
-        AddScore(10000);
+        AddScore(100000);
     }
 }

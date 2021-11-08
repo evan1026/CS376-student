@@ -9,6 +9,7 @@ public class BallController : MonoBehaviour {
 
     public Vector3 StartVelocity = new Vector3(2, 3, 0);
     public float Speed = 5;
+    public bool DebugLogging = false;
 
     private Rigidbody2D rigidBody;
     private AudioController audioController;
@@ -28,7 +29,20 @@ public class BallController : MonoBehaviour {
         if (Mathf.Abs(rigidBody.velocity.magnitude - Speed) > 0.1) {
             var direction = rigidBody.velocity.normalized;
             rigidBody.velocity = direction * Speed;
-            //Debug.Log("Fixed speed");
+
+            if (DebugLogging) {
+                Debug.Log("Fixed speed");
+            }
+        }
+
+        // Rarely the ball can get stuck just going left and right and it will never come
+        // down. To fix this, if we detect this case, we give the ball a slight downward
+        // trajectory
+        if (Mathf.Abs(rigidBody.velocity.y) <= 0.01) {
+            var vel = rigidBody.velocity;
+            vel.y = -0.1f;
+            var direction = vel.normalized;
+            rigidBody.velocity = direction * Speed;
         }
     }
 

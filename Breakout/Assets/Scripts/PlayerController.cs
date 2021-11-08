@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         var horizontal = Input.GetAxis("Horizontal");
-        rigidBody.velocity = new Vector3(horizontal * MoveSpeed, 0, 0);
+        var desiredSpeed = new Vector2(horizontal * MoveSpeed, 0);
+        var speedDiff = desiredSpeed - rigidBody.velocity;
+        rigidBody.AddForce(speedDiff, ForceMode2D.Impulse);
     }
 
     bool topCollision(Collision2D collision) {
