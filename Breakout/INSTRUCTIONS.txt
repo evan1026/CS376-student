@@ -1,0 +1,25 @@
+- Objects
+	- Colored rectangles are Bricks
+		- The color of the brick indicates how many hits it takes to break it
+		- Colors, in order of least to most hits, are Red, Orange, Yellow, Green, Blue, Purple, Pink, and Brown
+	- White circle is the Ball
+		- The ball moves at a fixed speed and bounces around the map
+		- When the ball hits a brick, it gives it a single "hit" which will either break it or change its color
+	- Brown rectangle at the bottom is the Paddle
+		- The paddle is controlled by the player (see Controls)
+		- The paddle moves at a fixed speed while the arrow keys are held, and takes a small amount of time to decellerate when they are released
+		- When the ball hits the paddle, it doesn't bounce with an angle based on the angle of incidence. Instead the angle is based on the distance from the center of the paddle. This allows the player to steer the ball
+	- Walls
+		- The left, right, and top sides of the screen have walls so that the ball does not go off the edge
+- Controls
+	- Left/Right Arrow Keys / A/D - Move the paddle left or right
+	- Space - Release a captured ball
+- Scoring
+	- A hit on a brick which doesn't break is worth 50 points
+	- A hit on a brick which does break is worth 100 points
+	- Clearing the entire level is worth 100,000 points
+- Game Clear Conditions
+	- The game ends when either no balls exist on the screen or no bricks exist on the screen
+	- If there are no balls left but bricks still exist, the player loses
+	- If all bricks are cleared, the player wins
+	- In either case, the player's final score is displayed

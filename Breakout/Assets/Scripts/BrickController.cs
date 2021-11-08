@@ -5,7 +5,7 @@ using UnityEngine;
 public class BrickController : MonoBehaviour {
 
     static Dictionary<int, Color> levelColors = null;
-    static int totalBricks = 0;
+    public static int totalBricks = 0;
 
     public int Level = 1;
 
