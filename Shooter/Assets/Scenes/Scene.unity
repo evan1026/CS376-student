@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 8385765989002429068, guid: 78765019a9298c0e4a3d169d915aa0da, type: 3}
-  SpawnInterval: 5
+  SpawnInterval: 0.5
 --- !u!212 &308155365
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308155362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.53, z: 0}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1188,6 +1188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 5
+  ShotCooldown: 0.15
+  BulletPrefab: {fileID: 6072698140082997765, guid: 54579bb18acc815a2ac39a26b5fcddcd, type: 3}
 --- !u!1 &2004935957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,7 +1328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004935957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 14, z: 0}
+  m_LocalPosition: {x: 0.1, y: 9, z: 0}
   m_LocalScale: {x: 9.0504, y: 4.1796, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

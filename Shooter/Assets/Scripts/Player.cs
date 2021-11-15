@@ -5,12 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public float MoveSpeed;
+    public float ShotCooldown;
+    public GameObject BulletPrefab;
 
     private Rigidbody2D rigidBody;
+    private float shotCooldown;
+    private Vector2 bulletOffset;
 
     // Start is called before the first frame update
     void Start() {
         rigidBody = GetComponent<Rigidbody2D>();
+        shotCooldown = 0;
+
+        var bounds = GetComponent<Collider2D>().bounds;
+        bulletOffset = new Vector2(0, bounds.size.y + BulletPrefab.GetComponent<Collider2D>().bounds.size.y + 0.1f);
     }
 
     // Update is called once per frame
@@ -19,6 +27,14 @@ public class Player : MonoBehaviour {
         var desiredSpeed = new Vector2(horizontal * MoveSpeed, 0);
         var speedDiff = desiredSpeed - rigidBody.velocity;
         rigidBody.AddForce(speedDiff, ForceMode2D.Impulse);
+
+        if (shotCooldown > 0) {
+            shotCooldown -= Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && shotCooldown <= 0) {
+            shoot();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -30,5 +46,11 @@ public class Player : MonoBehaviour {
     private void blowUp(GameObject other) {
         Destroy(gameObject);
         Destroy(other);
+    }
+
+    private void shoot() {
+        var bullet = Instantiate(BulletPrefab, rigidBody.position + bulletOffset, Quaternion.identity, gameObject.transform.parent);
+        bullet.GetComponent<Bullet>().SetDirection(new Vector2(0, 1));
+        shotCooldown = ShotCooldown;
     }
 }
