@@ -11,15 +11,9 @@ public class Enemy : MonoBehaviour {
     private float phaseOffset;
     private Rigidbody2D rigidBody;
 
-    // Start is called before the first frame update
     void Start() {
         phaseOffset = Random.Range(0.0f, 2 * Mathf.PI);
         rigidBody = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 
     void FixedUpdate() {
