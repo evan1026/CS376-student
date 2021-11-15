@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        Bullet.bulletPrefab = BulletPrefab;
+
         rigidBody = GetComponent<Rigidbody2D>();
         shotCooldown = 0;
 
@@ -49,8 +51,7 @@ public class Player : MonoBehaviour {
     }
 
     private void shoot() {
-        var bullet = Instantiate(BulletPrefab, rigidBody.position + bulletOffset, Quaternion.identity, gameObject.transform.parent);
-        bullet.GetComponent<Bullet>().SetDirection(new Vector2(0, 1));
+        Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, 1), "Enemy");
         shotCooldown = ShotCooldown;
     }
 }

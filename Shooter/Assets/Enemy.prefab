@@ -121,6 +121,8 @@ MonoBehaviour:
   DownSpeed: 1
   WaveAmplitude: 2
   WaveSpeed: 3
+  ShotCooldown: 2
+  BulletPrefab: {fileID: 6072698140082997765, guid: 54579bb18acc815a2ac39a26b5fcddcd, type: 3}
 --- !u!58 &8385765989002429065
 CircleCollider2D:
   m_ObjectHideFlags: 0
