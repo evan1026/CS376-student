@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
     public float WaveSpeed;
     public float ShotCooldown;
     public GameObject BulletPrefab;
+    public float BulletSpeed;
 
     private float phaseOffset;
     private float nextShot;
@@ -27,7 +28,8 @@ public class Enemy : MonoBehaviour {
 
     void Update() {
         if (Time.time >= nextShot) {
-            Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, -1), "Player");
+            Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, -1), "Player", BulletSpeed);
+            nextShot = Time.time + ShotCooldown;
         }
     }
 

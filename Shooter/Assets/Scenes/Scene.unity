@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 8385765989002429068, guid: 78765019a9298c0e4a3d169d915aa0da, type: 3}
-  SpawnInterval: 0.5
+  SpawnInterval: 1.25
   DifficultyScale: 0.999
 --- !u!212 &308155365
 SpriteRenderer:
@@ -1191,6 +1191,7 @@ MonoBehaviour:
   MoveSpeed: 5
   ShotCooldown: 0.15
   BulletPrefab: {fileID: 6072698140082997765, guid: 54579bb18acc815a2ac39a26b5fcddcd, type: 3}
+  BulletSpeed: 15
 --- !u!1 &2004935957
 GameObject:
   m_ObjectHideFlags: 0

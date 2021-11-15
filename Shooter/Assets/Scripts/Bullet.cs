@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    public float Speed;
     public static GameObject bulletPrefab;
 
     private string target;
+    private float speed;
 
     public void SetDirection(Vector2 dir) {
-        GetComponent<Rigidbody2D>().velocity = dir.normalized * Speed;
+        GetComponent<Rigidbody2D>().velocity = dir.normalized * speed;
     }
 
     public void SetTarget(string target) {
         this.target = target;
+    }
+
+    public void SetSpeed(float speed) {
+        this.speed = speed;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -39,8 +43,9 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    public static void Fire(Vector2 position, Transform parent, Vector2 direction, string target) {
+    public static void Fire(Vector2 position, Transform parent, Vector2 direction, string target, float speed) {
         var bullet = Instantiate(bulletPrefab, position, Quaternion.identity, parent).GetComponent<Bullet>();
+        bullet.SetSpeed(speed);
         bullet.SetDirection(direction);
         bullet.SetTarget(target);
     }

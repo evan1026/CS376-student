@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     public float MoveSpeed;
     public float ShotCooldown;
     public GameObject BulletPrefab;
+    public float BulletSpeed;
 
     private Rigidbody2D rigidBody;
     private float shotCooldown;
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour {
     }
 
     private void shoot() {
-        Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, 1), "Enemy");
+        Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, 1), "Enemy", BulletSpeed);
         shotCooldown = ShotCooldown;
     }
 }
