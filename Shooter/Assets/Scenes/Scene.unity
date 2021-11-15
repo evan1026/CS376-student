@@ -248,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 8385765989002429068, guid: 78765019a9298c0e4a3d169d915aa0da, type: 3}
   SpawnInterval: 0.5
+  DifficultyScale: 0.999
 --- !u!212 &308155365
 SpriteRenderer:
   m_ObjectHideFlags: 0

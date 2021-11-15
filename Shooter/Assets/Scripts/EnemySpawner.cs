@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public GameObject EnemyPrefab;
     public float SpawnInterval;
+    public float DifficultyScale;
 
     private Bounds spawnerBounds;
     private float nextSpawn;
@@ -22,6 +23,7 @@ public class EnemySpawner : MonoBehaviour {
             Vector3 position = new Vector3(x, y, 1);
             Instantiate(EnemyPrefab, position, Quaternion.identity, gameObject.transform.parent);
             nextSpawn = Time.time + SpawnInterval;
+            SpawnInterval *= DifficultyScale;
         }
     }
 }
