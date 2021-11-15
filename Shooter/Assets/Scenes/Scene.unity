@@ -1192,6 +1192,7 @@ MonoBehaviour:
   ShotCooldown: 0.15
   BulletPrefab: {fileID: 6072698140082997765, guid: 54579bb18acc815a2ac39a26b5fcddcd, type: 3}
   BulletSpeed: 15
+  ExplosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &2004935957
 GameObject:
   m_ObjectHideFlags: 0

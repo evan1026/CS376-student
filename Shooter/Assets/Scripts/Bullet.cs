@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour {
 
     public static GameObject bulletPrefab;
 
+    public GameObject ExplosionPrefab;
+
     private string target;
     private float speed;
 
@@ -38,6 +40,7 @@ public class Bullet : MonoBehaviour {
                 if (hitEnemy) {
                     Scoring.AddScore(100);
                 }
+                Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
                 Destroy(other);
             }
         }

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public float ShotCooldown;
     public GameObject BulletPrefab;
     public float BulletSpeed;
+    public GameObject ExplosionPrefab;
 
     private Rigidbody2D rigidBody;
     private float shotCooldown;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour {
     }
 
     private void blowUp(GameObject other) {
+        Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
+        Instantiate(ExplosionPrefab, transform.position, Quaternion.identity, transform.parent);
         Destroy(gameObject);
         Destroy(other);
     }
