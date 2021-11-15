@@ -13,19 +13,32 @@ public class Scoring : MonoBehaviour {
     void Start() {
         inst = this;
         text = GetComponent<TMP_Text>();
+        SetScore(0);
     }
 
-    public void SetScore(int score) {
+    public void setScore(int score) {
         this.score = score;
         updateText();
     }
 
-    public void AddScore(int score) {
+    public void addScore(int score) {
         SetScore(this.score + score);
     }
 
-    public void SubtractScore(int score) {
+    public void subtractScore(int score) {
         AddScore(-score);
+    }
+
+    public static void SetScore(int score) {
+        inst.setScore(score);
+    }
+
+    public static void AddScore(int score) {
+        inst.addScore(score);
+    }
+
+    public static void SubtractScore(int score) {
+        inst.subtractScore(score);
     }
 
     private void updateText() {
