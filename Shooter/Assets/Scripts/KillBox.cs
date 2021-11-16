@@ -16,6 +16,8 @@ public class KillBox : MonoBehaviour {
             if (player != null) {
                 player.BlowUp(null);
             }
+        } else if (collision.gameObject.CompareTag("Star")) {
+            Destroy(collision.gameObject);
         }
     }
 

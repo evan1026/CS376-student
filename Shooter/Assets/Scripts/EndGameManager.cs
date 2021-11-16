@@ -19,7 +19,9 @@ public class EndGameManager : MonoBehaviour {
     }
 
     private void EndGamePrivate() {
-        EndGameText.SetActive(true);
+        if (EndGameText != null) {
+            EndGameText.SetActive(true);
+        }
     }
 
     public static void RestartGame() {
