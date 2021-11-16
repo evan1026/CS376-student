@@ -1,0 +1,257 @@
+==========================================================================
+Date:   Mon Nov 15 13:10:00 2021 -0600
+
+Aesthetic goals
+---------------
+    * Something simple where the player can turn off their brain and mindlessly player
+        - Success would mean the game doesn't feel frustrating and the player doesn't
+          need to try over and over to achieve success in the game
+        - Failure would arise if the game was so mindless as to be boring, or if it was
+          hard enough to require a lot of effort
+    * Something that, despite being mindless, still has a little bit of challenge to it
+        - This is mostly just to make sure the game doesn't end up being too boring and
+          repetitive
+        - Success would mean that the player wants to succeed and feels accomplishment
+          at the end
+        - Failure would arise if the game was difficult enough to no longer be mindless
+        
+Core Loop
+---------
+Based on the above goals, I have chosen to implement an arcade style space-shooter wherein
+enemies slowly progress downward and the player has to fire bullets at them and make sure
+none of them make it past the player. Thus the core loop would be move left/right, then shoot,
+then repeat. To keep the game from being too repetitive and to add the layer of challenge,
+the enemies will be spawned in slowly over time in random positions at a rate that is almost
+enough to overwhelm the player but is still low enough to be very manageable.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 13:59:06 2021 -0600
+
+Commit: 6a776038 Initial commit with enemy spawning and movement
+----------------------------------------------------------------
+I've implemented the basic screen layout with enemy spawns and enemy movement. I've
+chosen to have the enemies sway back and forth to make them slightly more difficult
+to aim at. Enemies are currently spawning at a rate of 1 every 5 seconds but that
+will definitely have to be brought down. I also implemented a kill box at the bottom
+of the screen which destroys the enemy game objects whenever they make it down there
+so they don't clutter up the scene.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 15:08:57 2021 -0600
+
+Commit: 82fafeb6 Add scoring system
+-----------------------------------
+I added a class to keep track of the player's score and some text on screen to
+display it. Currently the only scoring that happens is when an enemy hits the kill
+box it adds 10 points. I figure if you manage to dodge the enemies that's worth at
+least a little bit.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 15:28:14 2021 -0600
+
+Commit: f712d5b9 Implement player movement
+------------------------------------------
+Not much to say outside of the commit message. I added code that allows the player to
+use the Horizontal axis (left/right arrow keys, A/D, left joystick, etc.) to move the
+player object left and right. This came with some tweaking of values to make sure the
+speed felt right but ultimately wan't that much to do.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 15:58:20 2021 -0600
+
+Commit: fd9accde Add shooting to player
+---------------------------------------
+Created a bullet prefab which gets instantiated when the player presses space. The
+player can also hold down space to fire repeatedly, so I had to make code to make a
+cooldown and tweak that along with the bullet speed to make it feel right. If the
+bullet hits either the player or an enemy, both the bullet and the object are
+destroyed. If it's an enemy, the player is given 100 points.
+
+I added another killbox to the top of the scene so that when the bullets
+hit it, they get cleaned up. Originally I forgot to do that and the framerate tanked
+within around 30 seconds of starting the game while firing continuously, but it was
+a very easy fix so I didn't think it was worth its own commit.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 16:08:41 2021 -0600
+
+Commit: 42e5f26b Add difficulty scaling
+---------------------------------------
+I spent some time trying to find a spawn rate for the enemies that felt right, but
+I couldn't really find one. Either it started off overwhelming or it stayed trivially
+easy the whole time. I want some level of difficulty but not so much that it is a
+chore just to score a few points.
+
+Ultimately I decided to have a difficulty ramp up. The way I've implemented it is to
+multiply the spawn rate by 0.999 every time an enemy is spawned. I got this number
+by starting with 0.9, seeing that it led to enemies overtaking the screen, and then
+bumping it up until I didn't feel like I was being swarmed lol.
+
+With this system, the player has some time in the beginning of the game to rack up
+some points, but eventually the spawn rate gets to be higher than the firing rate
+so the game will eventually end. In my testing, I found the ramp up to be slow enough
+that it felt natural. The beginning of the game draws you in by showing you that
+you can get lots of enemies, so that when you get to the harder part towards the
+end, you want to try to get as many as possible before you are inevitably overtaken.
+I think this is a big win for the aesthetic goals outlined in the beginning.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 16:31:29 2021 -0600
+
+Commit: 8f2c33ca Perfect. Ship it. No improvements can be made
+--------------------------------------------------------------
+This is sort of a joke commit that I made just because I may want to come back to
+this bug later as it is funny to watch.
+
+Originally, the game was just going to have the enemies come towards the player
+and the player has to get as many as possible until they are eventually overwhelmed.
+I didn't want to punish the player, however, for letting a few enemies get by, because
+it felt like this was more of a dodging game, and if they go by then you've dodged
+them. This led to a dynamic whereby the player could just sit in the corner and
+spam the gun, which would clear out a player-sized hole on the side, so the player
+could survive a huge onslaught of enemies by just ignoring them.
+
+To deal with this, I decided to instead have the enemies fight back. They will
+shoot at a constant interval and the player will have to dodge the bullets
+and the enemies. This way, even if the player can clear the enemies ahead, there
+will still be bullets coming at them, forcing them to move out of the way.
+
+In this commit, I forgot to fully implement the cooldown for the bullets fired
+by the enemy, so they spawn and after a short while they unleash a laser that
+cannot be avoided. With a couple of enemies all firing the lasers, the player
+gets quickly destroyed. It's not great as a final game mechanic, but it is
+funny to watch.
+==========================================================================
+
+
+==========================================================================
+Date:   Mon Nov 15 16:44:35 2021 -0600
+
+Commit: c623f555 Okay fine maybe the enemies shouldn't have lasers
+------------------------------------------------------------------
+This commit just fixes the bug described in the previous entry, as well as makes
+the enemies fire slow bullets while the user continues to fire fast bullets. The
+fast bullets from the enemies were too hard to dodge so I needed them to be slower.
+I also made the enemies spawn in more slowly to start with because now with there
+being 2-4 times as many objects on screen as before for any given spawn rate, I
+needed to back it down a bit so that it still starts off easy.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 17:26:47 2021 -0600
+
+Commit: 8ae0212e Add explosions
+-------------------------------
+Grabbed the toon explosion from Angry Blocks to use whenever the player and an enemy
+collide, or when a bullet destroys an enemy or the player.
+
+Initially, the animation would play and then after it was done the game object would
+stick around. I struggled with the animation system for what felt like ages before I
+finally found a way to run code when the animation was done without having it loop.
+On the plus side, I learned more about Unity's animation system.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 18:59:27 2021 -0600
+
+Commit: fb80538d Add sounds
+---------------------------
+Grabbed some sounds from https://freesound.org/ for when the user shoots and when
+an explosion happens. Both have Creative Commons licenses, so no legal issues there.
+I wanted to find things that sounded a little toony, since I have decided I don't
+think I want to change the basic sprites to actual images. I think I like the style
+of shape-on-shape violence, so I need some sounds to match. Plus the explosion is
+toony so it would seem out of place to have that in a game with other, more serious
+sprites, and I really don't want to have to mess with that animation system again.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 19:19:47 2021 -0600
+
+Commit: 3df47c43 End game system
+--------------------------------
+Just implemented the end game screen to tell the player that the game is over,
+display their score, and prompt them to play again. I've decided that I don't want
+dodging the enemies to be worth points, because it's still too easy to do. Instead
+I'm having it kill the player, and I'm liking the balance a lot more that way.
+
+Originally I had the end game screen pause the game, but I actually kind of like
+have the enemies continue on after the player dies. Something about it feels more
+satisfying.
+==========================================================================
+
+
+
+==========================================================================
+Date:   Mon Nov 15 21:02:40 2021 -0600
+
+Commit: 842aee6c Create background stars
+----------------------------------------
+The game is basically done, but it felt like it was missing some ambience, so
+I added some stars in the background that are randomly generated and just kind
+of scroll by. Wasn't too hard, although I did make use of the layer based collision
+system, so that was cool. But regardless, I think I'm done.
+==========================================================================
+    
+
+
+==========================================================================
+Date:   Mon Nov 15 21:05:40 2021 -0600
+
+Postmortem
+----------
+My goals didn't really change from start to finish. At least, not the aesthetic
+goals. The mechanics used to achieve those goals did change somewhat:
+    * Instead of spawning enemies at a fixed rate, I am spawning them at a rate
+      that increases over time
+    * Instead of having enemies simply fly towards the player, I had them shoot
+      so that there is a bit of extra challenge
+    * Instead of allowing the player to dodge enemies, I made missed enemies kill
+      the player
+I think overall my goals have been accomplished. The game feels the way I wanted
+it to - like the kind of game you can sit back and mindlessly do without getting
+bored super quickly.
+
+I think a lot of things went right here. I found most of the features to be relatively
+simple to implement. My main issues were:
+    * Dealing with colliders. There were so many cases where I wanted to have objects
+      take note of when they collided but not actually push each other around. It
+      to a while to realize that making them Kinematic instead of Dynamic was the
+      easiest way to achieve that goals
+    * Messing with the animation system. In the end, I added a single node to the
+      state machine and added 1 line of code to be called when a node was exited,
+      but figuring out how to do that took over 45 mins
+      
+That said, these issues have led to learning. I learned about the different types
+of rigid bodies (which were covered in class, but actually making them helps to
+actually solidify the knowledge). I also learned a great deal about how the
+animation system works. It's kind of a double-edged sword in a sense. On the one
+hand, tying to do something simple led me to understand a lot about how the system
+works. On the other hand, trying to do something simple forced me to understand a
+lot about how the system works. But I am confident that next time around I will be
+able to make those sorts of changes much more easily.
+==========================================================================

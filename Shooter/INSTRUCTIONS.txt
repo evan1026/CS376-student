@@ -1,0 +1,22 @@
+- Objects
+    - The player is the diamond at the bottom
+    - The enemies are the hexagons that come in from the top
+    - The orange boxes are bullets
+        - Bullets fired by the player can only kill enemies, and bullets fired by the enemies can only kill the player
+    - The small white boxes that scroll past are stars, and are there merely for aethetics
+- Controls
+    - Left/Right Arrow Keys / A/D - Move the player left or right
+    - Space - Fire
+        - The space key can be held to fire at the max rate
+- Scoring
+    - Each enemy is worth 100 points
+- Gameplay
+    - Enemies will slowly make their way from the top of the screen to the bottom
+    - The player must shoot the enemies to score points
+    - Any enemy which makes it off screen will instantly kill the player
+    - Enemies periodically fire bullets which can kill the player
+    - Crashing into an enemy also kills the player
+    - If the player dies, the game is over
+    - The final score is based on the number of enemies killed before the player dies
+    - The goal is go get the highest score possible
+    - The spawn rate of enemies slowly increases over time, so eventually the player will be overwhelmed by enemies and their bullets
