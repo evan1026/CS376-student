@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
     private void blowUp(GameObject other) {
         Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity, transform.parent);
+        SoundManager.PlayBoom();
         Destroy(gameObject);
         Destroy(other);
     }

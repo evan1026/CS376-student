@@ -41,6 +41,7 @@ public class Bullet : MonoBehaviour {
                     Scoring.AddScore(100);
                 }
                 Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
+                SoundManager.PlayBoom();
                 Destroy(other);
             }
         }
@@ -51,5 +52,6 @@ public class Bullet : MonoBehaviour {
         bullet.SetSpeed(speed);
         bullet.SetDirection(direction);
         bullet.SetTarget(target);
+        SoundManager.PlayPew();
     }
 }
