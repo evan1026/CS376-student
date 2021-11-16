@@ -43,20 +43,27 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Enemy")) {
-            blowUp(collision.gameObject);
+            BlowUp(collision.gameObject);
         }
     }
 
-    private void blowUp(GameObject other) {
-        Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
+    public void BlowUp(GameObject other) {
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity, transform.parent);
         SoundManager.PlayBoom();
         Destroy(gameObject);
-        Destroy(other);
+
+        if (other) {
+            Instantiate(ExplosionPrefab, other.transform.position, Quaternion.identity, transform.parent);
+            Destroy(other);
+        }
     }
 
     private void shoot() {
         Bullet.Fire(rigidBody.position + bulletOffset, gameObject.transform.parent, new Vector2(0, 1), "Enemy", BulletSpeed);
         shotCooldown = ShotCooldown;
+    }
+
+    private void OnDestroy() {
+        EndGameManager.EndGame();
     }
 }
