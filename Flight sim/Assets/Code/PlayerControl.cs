@@ -122,7 +122,22 @@ public class PlayerControl : MonoBehaviour {
 
         playerRB.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
 
-        thrust =  MaximumThrust * Mathf.Max(-Input.GetAxis("Thrust"), 0);
-        playerRB.AddForce(transform.forward * thrust);
+        thrust = MaximumThrust * Mathf.Max(-Input.GetAxis("Thrust"), 0);
+        Vector3 thrustForce = transform.forward * thrust;
+
+        Vector3 windSpeed = -playerRB.velocity;
+        float liftWindSpeed = Vector3.Dot(windSpeed, transform.forward);
+        Vector3 liftForce = LiftCoefficient * liftWindSpeed * liftWindSpeed * transform.up;
+
+        Vector3 forwardDragForce = Mathf.Sign(liftWindSpeed) * ForwardDragCoefficient * liftWindSpeed * liftWindSpeed * transform.forward;
+
+        float dragWindSpeed = Vector3.Dot(windSpeed, transform.up);
+        Vector3 verticalDragForce = Mathf.Sign(dragWindSpeed) * VerticalDragCoefficient * dragWindSpeed * dragWindSpeed * transform.up;
+
+        playerRB.AddForce(thrustForce);
+        playerRB.AddForce(liftForce);
+        playerRB.AddForce(forwardDragForce);
+        playerRB.AddForce(verticalDragForce);
     }
+
 }
