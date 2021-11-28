@@ -38,6 +38,8 @@ public class PlayerControl : MonoBehaviour {
     /// </summary>
     public float MaximumThrust = 20f;
 
+    public float LerpWeight = 0.1f;
+
     /// <summary>
     /// Text element for displaying status information
     /// </summary>
@@ -111,5 +113,13 @@ public class PlayerControl : MonoBehaviour {
             playerRB.velocity.magnitude,
             transform.position.y,
             thrust);
+    }
+
+    internal void FixedUpdate() {
+        roll = Mathf.Lerp(roll, Input.GetAxis("Horizontal") * RollRange, LerpWeight);
+        pitch = Mathf.Lerp(pitch, Input.GetAxis("Vertical") * PitchRange, LerpWeight);
+        yaw -= roll * RotationalSpeed;
+
+        playerRB.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
     }
 }
