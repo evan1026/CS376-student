@@ -140,4 +140,8 @@ public class PlayerControl : MonoBehaviour {
         playerRB.AddForce(verticalDragForce);
     }
 
+    internal void OnCollisionEnter(Collision collision) {
+        LandingPlatform landingPlatform = collision.gameObject.GetComponent<LandingPlatform>();
+        OnGameOver(!(landingPlatform == null || playerRB.velocity.magnitude > landingPlatform.MaxLandingSpeed));
+    }
 }

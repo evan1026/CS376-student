@@ -23,7 +23,6 @@ public class Target : MonoBehaviour {
     }
 
     internal void OnTriggerEnter(Collider other) {
-        Debug.Log("Collision with : " + other.gameObject.tag);
         if (other.gameObject.CompareTag("Player")) {
             ScoreManager.IncreaseScore(other.gameObject, ScoreValue);
             Destroy(gameObject);
