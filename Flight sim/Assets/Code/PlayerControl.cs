@@ -121,5 +121,8 @@ public class PlayerControl : MonoBehaviour {
         yaw -= roll * RotationalSpeed;
 
         playerRB.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
+
+        thrust =  MaximumThrust * Mathf.Max(-Input.GetAxis("Thrust"), 0);
+        playerRB.AddForce(transform.forward * thrust);
     }
 }
