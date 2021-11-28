@@ -79,6 +79,7 @@ public class PlayerControl : MonoBehaviour {
     /// Current thrust (forward force provided by engines
     /// </summary>
     private float thrust;
+    private int updraftLayerMask;
 #endregion
 
     /// <summary>
@@ -126,6 +127,15 @@ public class PlayerControl : MonoBehaviour {
         Vector3 thrustForce = transform.forward * thrust;
 
         Vector3 windSpeed = -playerRB.velocity;
+        var updrafts = Physics.OverlapSphere(transform.position, 1, UpdraftLayerMask);
+        foreach (var updraft in updrafts) {
+            Debug.Log("Windy today!");
+            Updraft updraftObj = updraft.gameObject.GetComponent<Updraft>();
+            if (updraftObj) { 
+                windSpeed += updraftObj.WindVelocity;
+            }
+        }
+
         float liftWindSpeed = Vector3.Dot(windSpeed, transform.forward);
         Vector3 liftForce = LiftCoefficient * liftWindSpeed * liftWindSpeed * transform.up;
 

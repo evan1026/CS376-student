@@ -23,7 +23,7 @@ public class Target : MonoBehaviour {
     }
 
     internal void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Player")) {
+        if (other.gameObject.GetComponent<PlayerControl>()) {
             ScoreManager.IncreaseScore(other.gameObject, ScoreValue);
             Destroy(gameObject);
         }
